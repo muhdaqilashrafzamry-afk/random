@@ -13,108 +13,156 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-wedding { font-family: 'Great Vibes', cursive; }
         
-        /* Animasi Khas untuk Tajuk Utama */
         @keyframes shock-in {
             0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
             70% { opacity: 1; transform: scale(1.1) rotate(5deg); }
             100% { opacity: 1; transform: scale(1) rotate(0); }
         }
         .animate-shock { animation: shock-in 0.8s ease-out forwards; }
+
+        /* Lock scrollbar semasa screen cover masih aktif */
+        .no-scroll { overflow: hidden; }
     </style>
 </head>
-<body class="bg-stone-100 text-stone-900 antialiased overflow-x-hidden">
+<body class="bg-stone-100 text-stone-900 antialiased overflow-x-hidden no-scroll">
 
-    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 bg-cover bg-center relative overflow-hidden" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1511285560929-80b456fed0bc?q=80&w=2069');">
-        <div class="absolute inset-0 bg-black/30 backdrop-blur-sm z-0"></div>
-
-        <div class="text-white z-10 p-6 rounded-3xl bg-black/40 border border-white/20 animate-shock">
-            <p class="uppercase tracking-widest text-xs mb-4 text-amber-200 font-bold">Bersiap Sedia Untuk...</p>
-            <h1 class="font-wedding text-7xl md:text-9xl mb-6 text-white leading-none">Nama Kakak & Pasangan</h1>
-            <p class="text-2xl md:text-3xl font-bold tracking-wider text-amber-100">SABTU, 12 DISEMBER 2026</p>
-            <p class="mt-4 text-sm font-light text-stone-300">(Save the date! Jangan lambat!)</p>
-        </div>
-
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/70 animate-bounce">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-        </div>
-    </section>
-
-    <section class="py-20 px-4 max-w-6xl mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
-        <h2 class="text-4xl font-bold mb-12 text-stone-800 tracking-tight">Butiran Utama</h2>
-        <div class="grid md:grid-cols-2 gap-10 text-left">
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col justify-center items-center text-center px-4 transition-all duration-1000 ease-in-out bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511285560929-80b456fed0bc?q=80&w=2069');">
+        <div class="text-white max-w-md p-6 rounded-3xl bg-black/30 backdrop-blur-md border border-white/10 shadow-2xl">
+            <p class="uppercase tracking-widest text-xs mb-2 text-amber-200 font-bold">Walimatulurus</p>
+            <h2 class="font-wedding text-5xl mb-6 text-white">Nama Kakak & Pasangan</h2>
+            <p class="text-sm font-light text-stone-300 mb-8">Anda dijemput ke majlis perkahwinan kami.</p>
             
-            <div class="bg-white p-8 rounded-3xl shadow-xl border border-stone-100 transform transition hover:scale-105 duration-300" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
-                <h3 class="text-2xl font-bold text-amber-800 mb-4 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                    </svg>
-                    Tarikh & Masa
-                </h3>
-                <p class="text-lg"><strong>Tarikh:</strong> 12 Disember 2026 (Sabtu)</p>
-                <p class="text-lg"><strong>Masa:</strong> 11:00 AM - 4:00 PM</p>
-                <p class="text-lg mt-2 font-semibold">Ketibaan Pengantin: <span class="text-amber-700">1:00 PM TEPAT!</span></p>
+            <button onclick="bukaJemputan()" class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full font-bold text-lg tracking-wide shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 cursor-pointer animate-bounce">
+                💌 Buka Jemputan
+            </button>
+        </div>
+    </div>
+
+    <audio id="wedding-music" loop>
+        <source src="https://archive.org/download/christina-perri-a-thousand-years_202202/Christina%20Perri%20-%20A%20Thousand%20Years.mp3" type="audio/mpeg">
+        Browser kau tak support audio ni bro.
+    </audio>
+
+
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000">
+        
+        <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 bg-cover bg-center relative overflow-hidden" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1511285560929-80b456fed0bc?q=80&w=2069');">
+            <div class="absolute inset-0 bg-black/30 backdrop-blur-sm z-0"></div>
+
+            <div id="hero-text" class="text-white z-10 p-6 rounded-3xl bg-black/40 border border-white/20">
+                <p class="uppercase tracking-widest text-xs mb-4 text-amber-200 font-bold">Bersiap Sedia Untuk...</p>
+                <h1 class="font-wedding text-7xl md:text-9xl mb-6 text-white leading-none">Nama Kakak & Pasangan</h1>
+                <p class="text-2xl md:text-3xl font-bold tracking-wider text-amber-100">SABTU, 12 DISEMBER 2026</p>
+                <p class="mt-4 text-sm font-light text-stone-300">(Save the date! Jangan lambat!)</p>
             </div>
-            
-            <div class="bg-white p-8 rounded-3xl shadow-xl border border-stone-100 transform transition hover:scale-105 duration-300" data-aos="fade-left" data-aos-delay="400" data-aos-duration="1000">
-                <h3 class="text-2xl font-bold text-amber-800 mb-4 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                    </svg>
-                    Lokasi Majlis
-                </h3>
-                <p class="text-lg"><strong>Tempat:</strong> Dewan Seri Anggerik</p>
-                <p class="text-lg mb-6">Jalan Kampung Melayu, 50450 Kuala Lumpur</p>
-                <div class="flex gap-3">
-                    <a href="https://waze.com" target="_blank" class="flex-1 text-center bg-emerald-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition">Waze</a>
-                    <a href="https://maps.google.com" target="_blank" class="flex-1 text-center bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Google Maps</a>
+
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/70 animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+            </div>
+        </section>
+
+        <section class="py-20 px-4 max-w-6xl mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
+            <h2 class="text-4xl font-bold mb-12 text-stone-800 tracking-tight">Butiran Utama</h2>
+            <div class="grid md:grid-cols-2 gap-10 text-left">
+                
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-stone-100 transform transition hover:scale-105 duration-300" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                    <h3 class="text-2xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                        </svg>
+                        Tarikh & Masa
+                    </h3>
+                    <p class="text-lg"><strong>Tarikh:</strong> 12 Disember 2026 (Sabtu)</p>
+                    <p class="text-lg"><strong>Masa:</strong> 11:00 AM - 4:00 PM</p>
+                    <p class="text-lg mt-2 font-semibold">Ketibaan Pengantin: <span class="text-amber-700">1:00 PM TEPAT!</span></p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-stone-100 transform transition hover:scale-105 duration-300" data-aos="fade-left" data-aos-delay="400" data-aos-duration="1000">
+                    <h3 class="text-2xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                        Lokasi Majlis
+                    </h3>
+                    <p class="text-lg"><strong>Tempat:</strong> Dewan Seri Anggerik</p>
+                    <p class="text-lg mb-6">Jalan Kampung Melayu, 50450 Kuala Lumpur</p>
+                    <div class="flex gap-3">
+                        <a href="https://waze.com" target="_blank" class="flex-1 text-center bg-emerald-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition">Waze</a>
+                        <a href="https://maps.google.com" target="_blank" class="flex-1 text-center bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Google Maps</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="bg-amber-100/50 py-20 px-4 text-center overflow-hidden">
-        <div class="max-w-xl mx-auto">
-            <h2 class="text-4xl font-bold mb-4 text-stone-800 tracking-tight" data-aos="fade-down" data-aos-duration="800">Hubungi Kami</h2>
-            <p class="text-stone-600 mb-10 text-lg" data-aos="fade-up" data-aos-duration="800">Sila klik butang di bawah untuk sebarang pertanyaan terus via WhatsApp.</p>
-            
-            <div class="grid gap-4">
-                <div data-aos="zoom-in-up" data-aos-delay="200" data-aos-duration="800">
-                    <a href="https://wa.me/60123456789?text=Salam%20saya%20nak%20tanya%20pasal%20majlis" target="_blank" class="flex items-center justify-between bg-white p-5 rounded-2xl shadow-md border border-stone-200/60 hover:border-amber-500 transition group">
-                        <div class="text-left">
-                            <p class="text-sm text-stone-500">Hubungi Ayah</p>
-                            <p class="text-xl font-bold text-stone-800">Encik Razak</p>
-                        </div>
-                        <span class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-xl font-semibold group-hover:bg-emerald-600 group-hover:text-white transition">WhatsApp</span>
-                    </a>
-                </div>
+        <section class="bg-amber-100/50 py-20 px-4 text-center overflow-hidden">
+            <div class="max-w-xl mx-auto">
+                <h2 class="text-4xl font-bold mb-4 text-stone-800 tracking-tight" data-aos="fade-down" data-aos-duration="800">Hubungi Kami</h2>
+                <p class="text-stone-600 mb-10 text-lg" data-aos="fade-up" data-aos-duration="800">Sila klik butang di bawah untuk sebarang pertanyaan terus via WhatsApp.</p>
+                
+                <div class="grid gap-4">
+                    <div data-aos="zoom-in-up" data-aos-delay="200" data-aos-duration="800">
+                        <a href="https://wa.me/60123456789?text=Salam%20saya%20nak%20tanya%20pasal%20majlis" target="_blank" class="flex items-center justify-between bg-white p-5 rounded-2xl shadow-md border border-stone-200/60 hover:border-amber-500 transition group">
+                            <div class="text-left">
+                                <p class="text-sm text-stone-500">Hubungi Ayah</p>
+                                <p class="text-xl font-bold text-stone-800">Encik Razak</p>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-xl font-semibold group-hover:bg-emerald-600 group-hover:text-white transition">WhatsApp</span>
+                        </a>
+                    </div>
 
-                <div data-aos="zoom-in-up" data-aos-delay="400" data-aos-duration="800">
-                    <a href="https://wa.me/60198765432?text=Salam%20saya%20nak%20tanya%20pasal%20majlis" target="_blank" class="flex items-center justify-between bg-white p-5 rounded-2xl shadow-md border border-stone-200/60 hover:border-amber-500 transition group">
-                        <div class="text-left">
-                            <p class="text-sm text-stone-500">Hubungi Ibu</p>
-                            <p class="text-xl font-bold text-stone-800">Puan Aminah</p>
-                        </div>
-                        <span class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-xl font-semibold group-hover:bg-emerald-600 group-hover:text-white transition">WhatsApp</span>
-                    </a>
+                    <div data-aos="zoom-in-up" data-aos-delay="400" data-aos-duration="800">
+                        <a href="https://wa.me/60198765432?text=Salam%20saya%20nak%20tanya%20pasal%20majlis" target="_blank" class="flex items-center justify-between bg-white p-5 rounded-2xl shadow-md border border-stone-200/60 hover:border-amber-500 transition group">
+                            <div class="text-left">
+                                <p class="text-sm text-stone-500">Hubungi Ibu</p>
+                                <p class="text-xl font-bold text-stone-800">Puan Aminah</p>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-xl font-semibold group-hover:bg-emerald-600 group-hover:text-white transition">WhatsApp</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="py-12 bg-stone-950 text-white text-center">
-        <p class="text-stone-600 text-xs">© 2026 Majlis Perkahwinan Kakak. Created with ❤️ for maximum surprise.</p>
-    </footer>
+        <footer class="py-12 bg-stone-950 text-white text-center">
+            <p class="text-stone-600 text-xs">© 2026 Majlis Perkahwinan Kakak. Created with ❤️ for maximum surprise.</p>
+        </footer>
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS dengan setting transition yang smooth
-        AOS.init({
-            once: true, // Animasi jalan sekali je bila scroll, tak ulang-ulang balik
-            offset: 120 // Animasi mula 120px sebelum elemen muncul kat screen
-        });
+        function bukaJemputan() {
+            // 1. Play lagu latar (A Thousand Years)
+            const audio = document.getElementById('wedding-music');
+            audio.play().catch(error => console.log("Audio autoplay block bypass active:", error));
+
+            // 2. Transisi hilangkan Splash Screen (Fade Out)
+            const splash = document.getElementById('splash-screen');
+            splash.classList.add('opacity-0', 'pointer-events-none');
+
+            // 3. Munculkan kandungan utama (Fade In)
+            const mainContent = document.getElementById('main-content');
+            mainContent.classList.remove('opacity-0');
+
+            // 4. Aktifkan balik fungsi scroll screen & trigger animasi tajuk meletup
+            document.body.classList.remove('no-scroll');
+            document.getElementById('hero-text').classList.add('animate-shock');
+
+            // 5. Initialize AOS selepas content dibuka biar tak lag
+            setTimeout(() => {
+                AOS.init({
+                    once: true,
+                    offset: 120
+                });
+            }, 300);
+
+            // Buang terus splash screen dari HTML selepas selesai animasi pudar
+            setTimeout(() => {
+                splash.remove();
+            }, 1000);
+        }
     </script>
 </body>
 </html>
